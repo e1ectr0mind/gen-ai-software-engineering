@@ -150,5 +150,16 @@ curl -s -X POST "$BASE/transactions" \
   -d '{"toAccount":"ACC-ALICE","amount":"10","currency":"USD","type":"deposit"}' \
   | python3 -m json.tool
 
+# ── SUMMARY TESTS ─────────────────────────────────────────────────────────────
+
+sep "33. GET /accounts/ACC-ALICE/summary (multi-currency, deposits + transfer out)"
+curl -s "$BASE/accounts/ACC-ALICE/summary" | python3 -m json.tool
+
+sep "34. GET /accounts/ACC-BOB/summary (transfer in + withdrawal)"
+curl -s "$BASE/accounts/ACC-BOB/summary" | python3 -m json.tool
+
+sep "35. GET /accounts/ACC-NEW/summary (no transactions → 200 with empty objects)"
+curl -s "$BASE/accounts/ACC-NEW/summary" | python3 -m json.tool
+
 echo ""
 echo "All smoke tests complete."

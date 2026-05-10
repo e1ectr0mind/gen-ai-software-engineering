@@ -8,7 +8,7 @@ from urllib.parse import parse_qs, urlparse
 
 from src import json_utils
 from src.errors import NotFoundError, ValidationError
-from src.handlers.accounts import get_balance
+from src.handlers.accounts import account_summary, get_balance
 from src.handlers.transactions import (
     create_transaction,
     get_transaction,
@@ -31,6 +31,7 @@ _router.register("POST", "/transactions", _bind_handler(create_transaction, _sto
 _router.register("GET", "/transactions", _bind_handler(list_transactions, _store))
 _router.register("GET", "/transactions/{id}", _bind_handler(get_transaction, _store))
 _router.register("GET", "/accounts/{accountId}/balance", _bind_handler(get_balance, _store))
+_router.register("GET", "/accounts/{accountId}/summary", _bind_handler(account_summary, _store))
 
 
 class RequestHandler(BaseHTTPRequestHandler):
