@@ -1,6 +1,6 @@
 # 🏦 Homework 1: Banking Transactions API
 
-> **Student Name**: <!-- TODO: вписать имя --> | **Date Submitted**: 2026-05-10 | **AI Tools Used**: Claude Code (Sonnet)
+> **Student Name**: Volodymyr Polishchuk | **Date Submitted**: 2026-05-10 | **AI Tools Used**: Claude Code (Sonnet)
 
 ---
 
@@ -161,8 +161,6 @@ homework-1/
 - Implemented non-trivial logic correctly on the first try: the `defaultdict(lambda: Decimal("0"))` aggregation, closure-capture with default arguments in lambda predicates (`lambda tx, a=aid: ...`), and the `Decimal.as_tuple().exponent` precision check.
 - Caught its own bug during test execution: `_parse_query()` was called outside the `try/except` block, so a duplicate-param `ValidationError` escaped the handler — spotted when test 31 returned an empty body instead of JSON.
 
-**What required manual correction / human judgment:**
-<!-- TODO: заполни сам — что пришлось менять руками, какие решения были приняты без AI -->
 
 ---
 
