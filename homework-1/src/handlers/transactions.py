@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime, timezone
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal
 from typing import Any
 
 from src.errors import NotFoundError, ValidationError
@@ -19,19 +19,14 @@ def create_transaction(
 ) -> tuple[int, dict]:
     errors = validate_transaction(body)
     if errors:
-        return 400, {"errors": [e.to_dict() for e in errors]}
-
-    try:
-        amount = Decimal(str(body["amount"]))
-    except (InvalidOperation, TypeError):
-        return 400, {"errors": [{"field": "amount", "message": "Invalid amount"}]}
+        raise ValidationError("Validation failed", details=errors)
 
     tx = Transaction(
         id=str(uuid.uuid4()),
-        fromAccount=body["fromAccount"],
-        toAccount=body["toAccount"],
-        amount=amount,
-        currency=body["currency"].upper(),
+        fromAccount=body.get("fromAccount"),
+        toAccount=body.get("toAccount"),
+        amount=Decimal(str(body["amount"])),
+        currency=str(body["currency"]).upper(),
         type=body["type"],
         timestamp=datetime.now(timezone.utc),
         status="completed",
@@ -46,8 +41,7 @@ def list_transactions(
     query_params: dict[str, str],
     body: dict[str, Any],
 ) -> tuple[int, dict]:
-    transactions = store.list_all()
-    return 200, {"transactions": [tx.to_dict() for tx in transactions]}
+    return 200, {"transactions": [tx.to_dict() for tx in store.list_all()]}
 
 
 def get_transaction(

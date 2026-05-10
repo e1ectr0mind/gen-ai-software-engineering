@@ -84,7 +84,10 @@ class RequestHandler(BaseHTTPRequestHandler):
             status, response = handler(path_params, query_params, body)
             self._send_json(status, response)
         except ValidationError as exc:
-            self._send_json(400, {"error": exc.message})
+            if exc.details:
+                self._send_json(400, {"error": exc.message, "details": exc.details})
+            else:
+                self._send_json(400, {"error": exc.message})
         except NotFoundError as exc:
             self._send_json(404, {"error": exc.message})
         except json.JSONDecodeError:

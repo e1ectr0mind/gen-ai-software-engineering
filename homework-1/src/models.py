@@ -9,8 +9,8 @@ from typing import Literal
 @dataclass
 class Transaction:
     id: str
-    fromAccount: str
-    toAccount: str
+    fromAccount: str | None
+    toAccount: str | None
     amount: Decimal
     currency: str
     type: Literal["deposit", "withdrawal", "transfer"]
