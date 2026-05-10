@@ -1,0 +1,66 @@
+[
+  {
+    "type": "deposit",
+    "toAccount": "ACC-ALICE",
+    "amount": "1000.00",
+    "currency": "USD"
+  },
+  {
+    "type": "deposit",
+    "toAccount": "ACC-BOB",
+    "amount": "500.00",
+    "currency": "EUR"
+  },
+  {
+    "type": "deposit",
+    "toAccount": "ACC-CAROL",
+    "amount": "2000.00",
+    "currency": "GBP"
+  },
+  {
+    "type": "deposit",
+    "toAccount": "ACC-ALICE",
+    "amount": "750.00",
+    "currency": "CHF"
+  },
+  {
+    "type": "transfer",
+    "fromAccount": "ACC-ALICE",
+    "toAccount": "ACC-BOB",
+    "amount": "250.00",
+    "currency": "USD"
+  },
+  {
+    "type": "transfer",
+    "fromAccount": "ACC-CAROL",
+    "toAccount": "ACC-ALICE",
+    "amount": "300.00",
+    "currency": "GBP"
+  },
+  {
+    "type": "transfer",
+    "fromAccount": "ACC-BOB",
+    "toAccount": "ACC-CAROL",
+    "amount": "150.00",
+    "currency": "EUR"
+  },
+  {
+    "type": "withdrawal",
+    "fromAccount": "ACC-BOB",
+    "amount": "100.00",
+    "currency": "EUR"
+  },
+  {
+    "type": "withdrawal",
+    "fromAccount": "ACC-CAROL",
+    "amount": "500.00",
+    "currency": "GBP"
+  },
+  {
+    "type": "transfer",
+    "fromAccount": "ACC-ALICE",
+    "toAccount": "ACC-CAROL",
+    "amount": "200.00",
+    "currency": "CHF"
+  }
+]
