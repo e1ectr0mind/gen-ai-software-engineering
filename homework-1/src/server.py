@@ -49,7 +49,10 @@ class RequestHandler(BaseHTTPRequestHandler):
     def _parse_query(self) -> dict[str, str]:
         parsed = urlparse(self.path)
         qs = parse_qs(parsed.query)
-        # Return first value for each key
+        duplicates = [k for k, v in qs.items() if len(v) > 1]
+        if duplicates:
+            joined = ", ".join(f"'{k}'" for k in sorted(duplicates))
+            raise ValidationError(f"Duplicate query parameters not allowed: {joined}")
         return {k: v[0] for k, v in qs.items()}
 
     def _read_body(self) -> dict:
@@ -77,9 +80,9 @@ class RequestHandler(BaseHTTPRequestHandler):
             return
 
         handler, path_params = result
-        query_params = self._parse_query()
 
         try:
+            query_params = self._parse_query()
             body = self._read_body() if method == "POST" else {}
             status, response = handler(path_params, query_params, body)
             self._send_json(status, response)

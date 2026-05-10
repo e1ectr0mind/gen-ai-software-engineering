@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import threading
-from typing import Iterator
+from collections.abc import Callable
 
 from src.models import Transaction
 
@@ -29,3 +29,10 @@ class TransactionStore:
                 tx for tx in self._data.values()
                 if tx.fromAccount == account_id or tx.toAccount == account_id
             ]
+
+    def list_filtered(self, predicates: list[Callable[[Transaction], bool]]) -> list[Transaction]:
+        with self._lock:
+            result = list(self._data.values())
+        for pred in predicates:
+            result = [tx for tx in result if pred(tx)]
+        return result
